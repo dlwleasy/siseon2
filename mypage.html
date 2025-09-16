@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>내정보</title> <!-- 공통 CSS -->
+    <link rel="stylesheet" href="CSS/nav.css">
+    <link rel="stylesheet" href="CSS/common.css">
+    <link rel="stylesheet" href="CSS/mypage.css">
+</head>
+
+<body> <!-- 헤더 (추천 페이지와 동일) -->
+    <header class="location-top">
+        <nav class="wrap nav"> <!-- 로고 --> <a href="/home.html">로고</a> <!-- 메뉴 리스트 -->
+            <ul class="menu">
+                <li><a href="/home.html">홈</a></li>
+                <li><a href="/reco.html">추천</a></li>
+                <li><a href="/culture.html">문화생활</a></li>
+                <li><a href="/community.html">소통</a></li>
+                <li><a href="/notice.html">공지사항</a></li>
+                <li><a href="/mypage.html" aria-current="page">내정보</a></li>
+            </ul> <!-- 로그인/회원가입 버튼 -->
+            <div class="auth"> <a class="btn" href="/login.html">로그인</a> <a class="btn" href="/signup.html">회원가입</a>
+            </div>
+        </nav>
+    </header> <!-- 본문 -->
+    <main class="container"> <!-- 프로필 카드 -->
+        <section class="profile-card">
+            <div class="profile-left">
+                <div class="avatar">
+                    <img src="img/mypage-profile.png" alt="프로필">
+                    <button class="cam-badge" type="button" aria-label="프로필 사진 변경">
+                        <img src="img/mypage-camera.png" alt="">
+                    </button>
+                </div>
+                <div class="info">
+                    <div class="name">김**</div>
+                    <div class="interests-title">내 관심 분야</div> <!-- 하나의 ul만 사용 -->
+                    <ul class="interests">
+                        <li class="interest"> <span class="interest-icon"> <img src="img/mypage-interest1.png"
+                                    alt="카페 아이콘"> </span> <span class="interest-label">카페</span> </li>
+                        <li class="interest"> <span class="interest-icon"> <img src="img/mypage-interest2.png"
+                                    alt="식물 아이콘"> </span> <span class="interest-label">식물</span> </li>
+                        <li class="interest"> <span class="interest-icon"> <img src="img/mypage-interest3.png"
+                                    alt="동물 아이콘"> </span> <span class="interest-label">동물</span> </li>
+                        <li class="interest"> <span class="interest-icon"> <img src="img/mypage-interest4.png"
+                                    alt="음악 아이콘"> </span> <span class="interest-label">음악</span> </li>
+                        <li class="interest"> <span class="interest-icon"> <img src="img/mypage-interest5.png"
+                                    alt="박물관 아이콘"> </span> <span class="interest-label">박물관</span> </li>
+                        <li class="interest"> <span class="interest-icon"> <img src="img/mypage-interest6.png"
+                                    alt="음식 아이콘"> </span> <span class="interest-label">음식</span> </li>
+                        <li class="interest"> <span class="interest-icon"> <img src="img/mypage-interest7.png"
+                                    alt="산책 아이콘"> </span> <span class="interest-label">산책</span> </li>
+                        <li class="interest"> <span class="interest-icon"> <img src="img/mypage-interest8.png"
+                                    alt="영화 아이콘"> </span> <span class="interest-label">영화</span> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="profile-right"> <button class="btn-secondary"> <img src="img/mypage-edit.png" alt="수정 아이콘"> 수정
+                </button> </div>
+        </section> <!-- 빠른 메뉴 -->
+        <section class="quick-menu"> <a class="qm-item" href="#">
+                <div class="qm-icon"> <img src="img/mypage-quickmenu1.png" alt="찜 목록 아이콘"> </div>
+                <div class="qm-label">찜 목록</div>
+            </a> <a class="qm-item" href="#">
+                <div class="qm-icon"> <img src="img/mypage-quickmenu2.png" alt="최근본모임 아이콘"> </div>
+                <div class="qm-label">최근 본 모임</div>
+            </a> <a class="qm-item" href="#">
+                <div class="qm-icon"> <img src="img/mypage-quickmenu3.png" alt="과거 모임 아이콘"> </div>
+                <div class="qm-label">과거 모임</div>
+            </a> <a class="qm-item" href="#">
+                <div class="qm-icon"> <img src="img/mypage-quickmenu4.png" alt="작성글 아이콘"> </div>
+                <div class="qm-label">작성글</div>
+            </a> </section> <!-- 다가오는 일정 -->
+        <section class="schedule">
+            <h2>다가오는 일정</h2>
+            <div class="timeline"> <!-- 점선/세로 라인 -->
+                <div class="line"></div> <!-- 일정 카드들 -->
+                <article class="sched-card">
+                    <div class="sched-main">
+                        <div class="sched-head">
+                            <span class="d-badge">D-1</span>
+                            <h3 class="sched-title">추억의 영화관 – 함께 보는 고전 영화</h3>
+                        </div>
+
+                        <div class="meta">
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom1.png" alt="달력 아이콘"> 08/31 (일)
+                            </span>
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom2.png" alt="시계 아이콘"> 오전12:00
+                            </span>
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom3.png" alt="사람 아이콘"> 7명
+                            </span>
+                        </div>
+                    </div>
+
+                    <button class="btn-chat">
+                        <img src="img/mypage-msg.png" alt="메시지 아이콘">
+                        채팅창
+                    </button>
+                </article>
+                <article class="sched-card">
+                    <div class="sched-main">
+                        <div class="sched-head">
+                            <span class="d-badge">D-1</span>
+                            <h3 class="sched-title">추억의 영화관 – 함께 보는 고전 영화</h3>
+                        </div>
+
+                        <div class="meta">
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom1.png" alt="달력 아이콘"> 08/31 (일)
+                            </span>
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom2.png" alt="시계 아이콘"> 오전12:00
+                            </span>
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom3.png" alt="사람 아이콘"> 7명
+                            </span>
+                        </div>
+                    </div>
+
+                    <button class="btn-chat">
+                        <img src="img/mypage-msg.png" alt="메시지 아이콘">
+                        채팅창
+                    </button>
+                </article>
+                <article class="sched-card">
+                    <div class="sched-main">
+                        <div class="sched-head">
+                            <span class="d-badge">D-1</span>
+                            <h3 class="sched-title">추억의 영화관 – 함께 보는 고전 영화</h3>
+                        </div>
+
+                        <div class="meta">
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom1.png" alt="달력 아이콘"> 08/31 (일)
+                            </span>
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom2.png" alt="시계 아이콘"> 오전12:00
+                            </span>
+                            <span class="meta-item">
+                                <img class="meta-icon" src="img/mypage-bottom3.png" alt="사람 아이콘"> 7명
+                            </span>
+                        </div>
+                    </div>
+
+                    <button class="btn-chat">
+                        <img src="img/mypage-msg.png" alt="메시지 아이콘">
+                        채팅창
+                    </button>
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
