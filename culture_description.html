@@ -162,6 +162,48 @@
         </div>
     </div>
 
+    <!-- 모임 매칭 모달 -->
+    <div id="matchModal" class="mmodal">
+        <div class="mmodal__overlay"></div>
+
+        <div class="mmodal__panel" role="dialog" aria-modal="true" aria-labelledby="matchTitle">
+            <div class="mmodal__head">
+                <button class="mmodal__back" type="button" aria-label="뒤로가기">‹</button>
+                <h2 id="matchTitle">가능한 날을 선택해 주세요</h2>
+            </div>
+
+            <div class="mmodal__quick">
+                <button class="qbtn" data-action="today">오늘</button>
+                <button class="qbtn" data-action="tomorrow">내일</button>
+                <button class="qbtn" data-action="dayafter">모레</button>
+                <button class="qbtn qbtn--active" data-action="all">
+                    <span class="qbtn__icon">🗓</span> 모든 날짜
+                </button>
+            </div>
+
+            <div class="cal">
+                <div class="cal__head">
+                    <button class="cal__nav" data-dir="-1" aria-label="이전 달">‹</button>
+                    <div class="cal__title"></div>
+                    <button class="cal__nav" data-dir="1" aria-label="다음 달">›</button>
+                </div>
+
+                <div class="cal__week">
+                    <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+                </div>
+
+                <div class="cal__grid" id="calGrid"></div>
+            </div>
+
+            <div class="mmodal__pager">
+                <div class="dot-wrap">
+                    <span class="dot dot--on"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+                <button id="matchNext" class="mmodal__next" type="button">다음 →</button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/culture_description.js"></script>
 </body>
 
 </html>
