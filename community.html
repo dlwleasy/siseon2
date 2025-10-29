@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>내정보</title>
+    <link rel="stylesheet" href="CSS/nav.css" />
+    <link rel="stylesheet" href="CSS/community.css" />
+  </head>
+
+  <body>
+    <!-- 헤더 -->
+    <header>
+      <nav class="nav">
+        <a href="/home.html">시선_</a>
+        <ul class="menu">
+          <li><a href="/home.html">홈</a></li>
+          <li><a href="/reco.html">추천</a></li>
+          <li><a href="/culture.html">문화생활</a></li>
+          <li><a href="/community.html">소통</a></li>
+          <li><a href="/notice.html">공지사항</a></li>
+          <li><a href="/mypage.html">내정보</a></li>
+        </ul>
+        <div class="auth">
+          <a class="btn" href="/login.html">로그인</a>
+          <a class="btn" href="/signup.html">회원가입</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="container">
+      <!-- 히어로 섹션 -->
+      <div class="hero">
+        <img
+          src="https://via.placeholder.com/180"
+          alt="캐릭터"
+          class="hero-img"
+        />
+        <div class="hero-text">
+          <h1 id="heroTitle">시선으로 이야기는</h1>
+          <p>
+            <strong id="heroSubtitle">우리의 일상 이야기</strong>를 함께 나눠요
+          </p>
+        </div>
+      </div>
+
+      <!-- 탭 -->
+      <div class="tabs">
+        <button class="tab active" data-tab="daily">일상</button>
+        <button class="tab" data-tab="review">후기</button>
+      </div>
+
+      <!-- 일상 컨텐츠 -->
+      <div id="daily-content">
+        <!-- 작성 폼 -->
+        <div class="form-section">
+          <form id="dailyForm">
+            <div class="form-group">
+              <input
+                type="text"
+                id="dailyTitle"
+                placeholder="제목: 같이의! 한 줄로 스토리로 담은 일상을 적어보세요!"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <textarea
+                id="dailyContent"
+                placeholder="스토리를 자유롭게 적어보세요!"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="submit-btn">게시</button>
+          </form>
+        </div>
+
+        <!-- 게시글 리스트 -->
+        <div class="post-list" id="dailyList"></div>
+
+        <!-- 더보기 버튼 -->
+        <div class="load-more">
+          <button id="loadMoreDaily">
+            <span>더 불러오기</span>
+            <span>↓</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 후기 컨텐츠 -->
+      <div id="review-content" class="hidden">
+        <!-- 작성 폼 -->
+        <div class="form-section">
+          <form id="reviewForm">
+            <div class="star-rating" id="starRating">
+              <span class="star" data-rating="1">★</span>
+              <span class="star" data-rating="2">★</span>
+              <span class="star" data-rating="3">★</span>
+              <span class="star" data-rating="4">★</span>
+              <span class="star" data-rating="5">★</span>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                id="reviewTitle"
+                placeholder="같이의!, 함께 즐거웠던 시선의 모든 추억을 적어보세요!"
+                required
+              />
+            </div>
+            <div class="image-upload">
+              <label for="reviewImages">📷 사진 업로드</label>
+              <input type="file" id="reviewImages" accept="image/*" multiple />
+              <div class="image-preview" id="imagePreview"></div>
+            </div>
+            <button type="submit" class="submit-btn">게시</button>
+          </form>
+        </div>
+
+        <!-- 게시글 리스트 -->
+        <div class="post-list" id="reviewList"></div>
+
+        <!-- 더보기 버튼 -->
+        <div class="load-more">
+          <button id="loadMoreReview">
+            <span>더 불러오기</span>
+            <span>↓</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 댓글 모달 -->
+    <div class="modal" id="commentModal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeCommentModal()">×</button>
+        <div class="modal-title" id="modalPostTitle"></div>
+        <div id="modalPostImages"></div>
+        <div id="modalPostContent"></div>
+        <div id="modalPostRating"></div>
+
+        <div class="comments-section">
+          <div class="comments-title">
+            댓글 <span id="commentCount">0</span>
+          </div>
+          <div class="comment-form">
+            <input
+              type="text"
+              id="commentInput"
+              placeholder="댓글을 입력하세요..."
+            />
+            <button onclick="addComment()">게시</button>
+          </div>
+          <div class="comment-list" id="commentList">
+            <div class="no-comments">아직 댓글이 없습니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="JS/community.js"></script>
+  </body>
+</html>
