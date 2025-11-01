@@ -51,6 +51,10 @@ body {
   color: var(--ink);
   letter-spacing: -0.2px;
 }
+.brand-logo {
+  height: 40px;
+  display: block;
+}
 
 /* 메뉴 */
 .menu {

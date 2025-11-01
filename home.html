@@ -1,735 +1,811 @@
 <!DOCTYPE html>
 <html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>홈</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <title>추천</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+      html {
+        scroll-behavior: smooth;
+      }
 
-    html {
-      scroll-behavior: smooth;
-    }
+      body {
+        font-family: Arial, sans-serif;
+        color: #fff;
+        scroll-snap-type: y mandatory;
+        overflow-y: auto;
+        background: #000;
+      }
 
-    body {
-      font-family: Arial, sans-serif;
-      color: #fff;
-      scroll-snap-type: y mandatory;
-      overflow-y: auto;
-      background: #000;
-    }
+      /* 공통 섹션 */
+      section.page {
+        min-height: 100vh;
+        scroll-snap-align: start;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* 기본: 가운데 정렬 */
+      }
 
-    /* 공통 섹션 */
-    section.page {
-      min-height: 100vh;
-      scroll-snap-align: start;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* 기본: 가운데 정렬 */
-    }
+      /* 헤더 */
+      .location-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+        padding: 15px 0;
+      }
 
-    /* 헤더 */
-    .location-top {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 10;
-      padding: 15px 0;
-    }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
 
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+      .menu {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+      }
 
-    .menu {
-      display: flex;
-      gap: 30px;
-      list-style: none;
-    }
+      .menu a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 12px;
+        padding: 8px 0;
+        position: relative;
+      }
 
-    .menu a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 12px;
-      padding: 8px 0;
-      position: relative;
-    }
+      .menu a[aria-current="page"]::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 2px;
+        background: #ffd700;
+      }
 
-    .menu a[aria-current="page"]::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 100%;
-      height: 2px;
-      background: #ffd700;
-    }
+      .auth {
+        display: flex;
+        gap: 10px;
+      }
 
-    .auth {
-      display: flex;
-      gap: 10px;
-    }
+      .btn {
+        background: #ffd700;
+        color: #000;
+        padding: 8px 25px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 12px;
+      }
 
-    .btn {
-      background: #ffd700;
-      color: #000;
-      padding: 8px 25px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 12px;
-    }
+      .brand-logo {
+        height: 40px;
+        display: block;
+      }
 
-    .brand-logo {
-      height: 40px;
-      display: block;
-    }
+      /* 공통 이너 컨테이너 */
+      .inner {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+      }
 
-    /* 공통 이너 컨테이너 */
-    .inner {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      text-align: center;
-    }
+      /* 1) 히어로 */
+      #hero {
+        justify-content: flex-start;
+      }
 
-    /* 1) 히어로 */
-    #hero {
-      justify-content: flex-start;
-    }
+      /* 히어로만 좌측 배치 유지 */
+      #hero .bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+      }
 
-    /* 히어로만 좌측 배치 유지 */
-    #hero .bg {
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-    }
+      #hero .bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: brightness(0.85);
+      }
 
-    #hero .bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      filter: brightness(0.85);
-    }
+      #hero .content {
+        max-width: 600px;
+        margin-left: 10vw;
+      }
 
-    #hero .content {
-      max-width: 600px;
-      margin-left: 10vw;
-    }
+      #hero .center-logo {
+        width: 220px;
+        margin-bottom: 20px;
+        display: block;
+      }
 
-    #hero .center-logo {
-      width: 220px;
-      margin-bottom: 20px;
-      display: block;
-    }
+      #hero h2 {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
 
-    #hero h2 {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+      #hero p {
+        font-size: 18px;
+        color: #ddd;
+      }
 
-    #hero p {
-      font-size: 18px;
-      color: #ddd;
-    }
+      .scroll-down {
+        position: absolute;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 14px;
+        color: #ffd700;
+        text-decoration: none;
+        padding: 8px 14px;
+        border: 1px solid #ffd700;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.25);
+      }
 
-    .scroll-down {
-      position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 14px;
-      color: #ffd700;
-      text-decoration: none;
-      padding: 8px 14px;
-      border: 1px solid #ffd700;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.25);
-    }
+      /* 2) about */
+      #about {
+        color: #222;
+        background: linear-gradient(#fff4de, #ffffff);
+      }
 
-    /* 2) about */
-    #about {
-      color: #222;
-      background: linear-gradient(#fff4de, #ffffff);
-    }
+      #about h2 {
+        font-size: 36px;
+        margin-bottom: 40px;
+        color: #222;
+      }
 
-    #about h2 {
-      font-size: 36px;
-      margin-bottom: 40px;
-      color: #222;
-    }
+      #about p.desc {
+        font-size: 20px;
+        line-height: 1.6;
+        color: #222;
+      }
 
-    #about p.desc {
-      font-size: 20px;
-      line-height: 1.6;
-      color: #222;
-    }
+      #about b {
+        font-weight: 800;
+      }
 
-    #about b {
-      font-weight: 800;
-    }
+      #about .center-logo {
+        width: 100px;
+        display: block;
+        margin: 1px auto 40px;
+      }
 
-    #about .center-logo {
-      width: 100px;
-      display: block;
-      margin: 1px auto 40px;
-    }
+      .venn {
+        width: 700px;
+        max-width: 92vw;
+        margin: 0 auto 24px;
+        filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.08));
+      }
 
-    .venn {
-      width: 700px;
-      max-width: 92vw;
-      margin: 0 auto 24px;
-      filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.08));
-    }
+      /* 3) features */
+      #features {
+        background: #ffffff;
+        color: #111;
+      }
 
-    /* 3) features */
-    #features {
-      background: #ffffff;
-      color: #111;
-    }
+      #features h2 {
+        font-size: 32px;
+        margin-bottom: 36px;
+        font-weight: 800;
+      }
 
-    #features h2 {
-      font-size: 32px;
-      margin-bottom: 36px;
-      font-weight: 800;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 28px;
-    }
-
-    .card {
-      background: #f3f4f6;
-      border-radius: 20px;
-      padding: 28px 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-      transition: transform 0.15s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
-    }
-
-    .card img {
-      width: 220px;
-      height: 220px;
-      object-fit: contain;
-      margin: 0 auto 12px;
-      display: block;
-    }
-
-    .card .title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-top: 6px;
-    }
-
-    /* 4) value */
-    #value {
-      background: #fff;
-      color: #222;
-    }
-
-    #value .quote {
-      font-size: 30px;
-      font-weight: 500;
-      line-height: 1.6;
-      margin-bottom: 48px;
-      color: #111;
-    }
-
-    #value .quote .mark {
-      color: #f5a400;
-      font-size: 32px;
-      vertical-align: middle;
-    }
-
-    .video-wrap {
-      max-width: 720px;
-      margin: 0 auto 56px;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-    }
-
-    .video-wrap video {
-      width: 100%;
-      display: block;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 48px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .feature img {
-      width: 56px;
-      height: 56px;
-      margin-bottom: 12px;
-    }
-
-    .feature h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .feature p {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #555;
-    }
-
-    /* 반응형 */
-    @media (max-width: 960px) {
       .cards {
-        grid-template-columns: 1fr;
-        gap: 18px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+      }
+
+      .card {
+        background: #f3f4f6;
+        border-radius: 20px;
+        padding: 28px 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        transition: transform 0.15s ease, box-shadow 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
       }
 
       .card img {
-        width: 180px;
-        height: 180px;
+        width: 220px;
+        height: 220px;
+        object-fit: contain;
+        margin: 0 auto 12px;
+        display: block;
+      }
+
+      .card .title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-top: 6px;
+      }
+
+      /* 4) value */
+      #value {
+        background: #fff;
+        color: #222;
+      }
+
+      #value .quote {
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 1.6;
+        margin-bottom: 48px;
+        color: #111;
+      }
+
+      #value .quote .mark {
+        color: #f5a400;
+        font-size: 32px;
+        vertical-align: middle;
+      }
+
+      .video-wrap {
+        max-width: 720px;
+        margin: 0 auto 56px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      }
+
+      .video-wrap video {
+        width: 100%;
+        display: block;
       }
 
       .features {
-        grid-template-columns: 1fr 1fr;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 48px;
+        max-width: 900px;
+        margin: 0 auto;
       }
-    }
 
-    @media (max-width: 640px) {
-      .features {
-        grid-template-columns: 1fr;
+      .feature img {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 12px;
       }
-    }
 
-    /* 전역 챗봇: 우측 상단 고정 */
-    .chatbot-fixed {
-      position: fixed;
-      top: 24px;
-      right: 24px;
-      z-index: 1000;
-    }
+      .feature h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
 
-    .chatbot-fixed img {
-      width: 140px;
-      height: auto;
-      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.12));
-      cursor: pointer;
-    }
+      .feature p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #555;
+      }
 
-    /* functions */
-    #functions {
-      background: #fff;
-      color: #111;
-      text-align: center;
-      padding: 96px 24px;
-    }
-
-    #functions .inner {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    #functions h2 {
-      font-size: 32px;
-      margin-bottom: 40px;
-      line-height: 1.5;
-    }
-
-    .functions-img {
-      width: min(1100px, 92vw);
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.08));
-      border-radius: 28px;
-      /* 이미지 자체가 둥글어도 약간 더 부드럽게 */
-    }
-
-    /* CTA 섹션 */
-    #cta {
-      background: #fff;
-      color: #111;
-      padding: 96px 24px;
-    }
-
-    #cta .inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .cta-title {
-      font-size: 36px;
-      line-height: 1.35;
-      margin-bottom: 40px;
-      font-weight: 800;
-    }
-
-    .cta-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 36px;
-      align-items: stretch;
-    }
-
-    /* 카드 공통 */
-    .cta-card {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 40px 36px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, .08);
-      text-decoration: none;
-      color: inherit;
-      transition: transform .18s ease, box-shadow .22s ease;
-    }
-
-    .cta-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
-            background: #FEF3C7;
-            /* 연노랑 */
-            box-shadow: 0 10px 28px rgba(245, 164, 0, .18);
-            border: 1px solid #FCD34D;
+      /* 반응형 */
+      @media (max-width: 960px) {
+        .cards {
+          grid-template-columns: 1fr;
+          gap: 18px;
         }
 
-    /* 좌측 텍스트 */
-    .cta-text {
-      text-align: left;
-    }
+        .card img {
+          width: 180px;
+          height: 180px;
+        }
 
-    .eyebrow {
-      color: #6b7280;
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    .cta-headline {
-      font-size: 28px;
-      font-weight: 800;
-    }
-
-    /* 우측 일러스트 */
-    .cta-illust {
-      width: 220px;
-      height: auto;
-      object-fit: contain;
-      pointer-events: none;
-    }
-
-    /* 우상단 화살표 */
-    .cta-go {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #f5a400;
-      color: #fff;
-      font-weight: 800;
-      border-radius: 999px;
-      box-shadow: 0 4px 10px rgba(245, 164, 0, 0.3);
-    }
-
-    /* 반응형 */
-    @media (max-width: 980px) {
-      .cta-grid {
-        grid-template-columns: 1fr;
+        .features {
+          grid-template-columns: 1fr 1fr;
+        }
       }
 
-      .cta-illust {
-        width: 180px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .cta-card {
-        padding: 28px 22px;
+      @media (max-width: 640px) {
+        .features {
+          grid-template-columns: 1fr;
+        }
       }
 
-      .cta-illust {
-        width: 150px;
+      /* 전역 챗봇: 우측 상단 고정 */
+      .chatbot-fixed {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 1000;
       }
 
-      .cta-headline {
-        font-size: 24px;
+      .chatbot-fixed img {
+        width: 140px;
+        height: auto;
+        filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.12));
+        cursor: pointer;
+      }
+
+      /* functions */
+      #functions {
+        background: #fff;
+        color: #111;
+        text-align: center;
+        padding: 96px 24px;
+      }
+
+      #functions .inner {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      #functions h2 {
+        font-size: 32px;
+        margin-bottom: 40px;
+        line-height: 1.5;
+      }
+
+      .functions-img {
+        width: min(1100px, 92vw);
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.08));
+        border-radius: 28px;
+        /* 이미지 자체가 둥글어도 약간 더 부드럽게 */
+      }
+
+      /* CTA 섹션 */
+      #cta {
+        background: #fff;
+        color: #111;
+        padding: 96px 24px;
+      }
+
+      #cta .inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
       }
 
       .cta-title {
+        font-size: 36px;
+        line-height: 1.35;
+        margin-bottom: 40px;
+        font-weight: 800;
+      }
+
+      .cta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+        align-items: stretch;
+      }
+
+      /* 카드 공통 */
+      .cta-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 40px 36px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.18s ease, box-shadow 0.22s ease;
+      }
+
+      .cta-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+        background: #fef3c7;
+        /* 연노랑 */
+        box-shadow: 0 10px 28px rgba(245, 164, 0, 0.18);
+        border: 1px solid #fcd34d;
+      }
+
+      /* 좌측 텍스트 */
+      .cta-text {
+        text-align: left;
+      }
+
+      .eyebrow {
+        color: #6b7280;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .cta-headline {
         font-size: 28px;
+        font-weight: 800;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <!-- 섹션 1: 히어로 -->
-  <section class="page" id="hero">
-    <header class="location-top">
-      <nav class="wrap nav">
-        <a href="/home.html"><img src="img/siseon_letter.png" alt="시선 로고" class="brand-logo" /></a>
-
-        <ul class="menu">
-          <li><a href="/home.html" aria-current="page">홈</a></li>
-          <li><a href="/reco.html">추천</a></li>
-          <li><a href="/culture.html">문화생활</a></li>
-          <li><a href="/community.html">소통</a></li>
-          <li><a href="/notice.html">공지사항</a></li>
-          <li><a href="/mypage.html">내정보</a></li>
-        </ul>
-        <div class="auth">
-          <a class="btn" href="/login.html">로그인</a>
-          <a class="btn" href="/signup.html">회원가입</a>
-        </div>
-      </nav>
-    </header>
-
-    <div class="bg">
-      <img src="img/main_1.png" alt="배경" />
-    </div>
-
-    <div class="content">
-      <img src="img/siseon_letter.png" alt="시선 로고 중앙" class="center-logo" />
-      <h2>새로움과 연결 선이 필요 하신가요?</h2>
-      <p>새로운 시선으로 시니어와 세상을 연결 시키다</p>
-    </div>
-
-    <a href="#about" class="scroll-down">아래로 스크롤</a>
-  </section>
-
-  <!-- 섹션 2: 시선이란? -->
-  <section class="page" id="about">
-    <div class="inner">
-      <h2><b>시선</b>이란?</h2>
-
-      <div class="venn" aria-hidden="true">
-        <svg viewBox="0 0 900 500" width="70%" height="auto" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <radialGradient id="gfill" cx="50%" cy="30%" r="80%">
-              <stop offset="0%" stop-color="#FFD361" stop-opacity="0.45" />
-              <stop offset="100%" stop-color="#FFD361" stop-opacity="0.25" />
-            </radialGradient>
-          </defs>
-
-          <!-- 좌/우 원 -->
-          <circle cx="330" cy="230" r="140" fill="url(#gfill)" stroke="#FFC21E" stroke-width="3" />
-          <circle cx="570" cy="230" r="140" fill="url(#gfill)" stroke="#FFC21E" stroke-width="3" />
-
-          <!-- 좌측 텍스트 -->
-          <text x="330" y="225" text-anchor="middle" font-family="Pretendard, Arial, sans-serif" font-weight="800"
-            font-size="36" fill="#F5A400">
-            시니어
-          </text>
-          <text x="330" y="255" text-anchor="middle" font-family="Pretendard, Arial, sans-serif" font-size="18"
-            fill="#333">
-            60세 이상의 노인 세대
-          </text>
-
-          <!-- 우측 텍스트 -->
-          <text x="570" y="225" text-anchor="middle" font-family="Pretendard, Arial, sans-serif" font-weight="800"
-            font-size="36" fill="#F5A400">
-            선
-          </text>
-          <text x="570" y="255" text-anchor="middle" font-family="Pretendard, Arial, sans-serif" font-size="18"
-            fill="#333">
-            연결 線
-          </text>
-
-          <!-- 중앙 점 + 화살표 -->
-          <line x1="450" y1="250" x2="450" y2="420" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round" />
-          <circle cx="450" cy="250" r="5" fill="#6B6B6B" />
-          <path d="M 440 410 L 450 430 L 460 410" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
-      </div>
-
-      <img src="img/siseon_logo.png" alt="시선 로고" class="center-logo" />
-      <p class="desc">
-        <b>시니어(Senior)</b>와 <b>선(연결)</b>을 더한 말로<br />
-        시니어들이 문화를 통해 서로 연결되는 플랫폼이다.
-      </p>
-    </div>
-
-    <a href="#features" class="scroll-down">아래로 스크롤</a>
-  </section>
-
-  <!-- 섹션 3: 누구나 쉽게! -->
-  <section class="page" id="features">
-    <div class="inner">
-      <h2>누구나 쉽게!</h2>
-      <div class="cards">
-        <div class="card">
-          <img src="img/feature_1.png" alt="문화행사 추천 이미지" />
-          <div class="title">문화행사 추천</div>
-        </div>
-        <div class="card">
-          <img src="img/feature_2.png" alt="모임 자동 매칭 이미지" />
-          <div class="title">모임 자동 매칭</div>
-        </div>
-        <div class="card">
-          <img src="img/feature_3.png" alt="후기 작성 이미지" />
-          <div class="title">후기 작성</div>
-        </div>
-      </div>
-    </div>
-    <a href="#value" class="scroll-down">아래로 스크롤</a>
-  </section>
-
-  <!-- 섹션 4: 가치 소개 -->
-  <section class="page" id="value">
-    <div class="inner">
-      <blockquote class="quote">
-        <span class="mark">❝</span>
-        언제나 당신을 이어줄 선과 함께<br />
-        새로운 시선으로 세상을 연결 시켜드리겠습니다
-        <span class="mark">❞</span>
-      </blockquote>
-
-      <!-- 비디오 위치. 생기면 넣을 것 -->
-      <div class="video-wrap">
-        <video controls poster="video_thumb.jpg">
-          <source src="intro_video.mp4" type="video/mp4" />
-          브라우저가 비디오를 지원하지 않습니다.
-        </video>
-      </div>
-
-      <div class="features">
-        <div class="feature">
-          <img src="img/value_1.png" alt="연결 강화" />
-          <h3>사회적 연결 강화</h3>
-          <p>
-            혼자 있는 시간이 많은 시니어들이 공원 산책과 모임에 참여하고 또래
-            친구들과 소통할 수 있어요.
-          </p>
-        </div>
-        <div class="feature">
-          <img src="img/value_2.png" alt="문화 확산" />
-          <h3>문화생활 참여 확대</h3>
-          <p>
-            전시, 공연, 체험 등 다양한 문화활동을 쉽게 찾고 신청할 수 있어
-            삶의 활력을 느낄 수 있어요.
-          </p>
-        </div>
-        <div class="feature">
-          <img src="img/value_3.png" alt="디지털 역량" />
-          <h3>디지털 역량 향상</h3>
-          <p>
-            쉽고 재미있는 사용법으로 자연스럽게 디지털 기기 사용에 익숙해져
-            자신감이 생겨요.
-          </p>
-        </div>
-        <div class="feature">
-          <img src="img/value_4.png" alt="일정 관리" />
-          <h3>개인 일정 관리</h3>
-          <p>
-            참여할 행사, 모임, 후기 등을 스스로 관리할 수 있어 자기 주도적인
-            생활이 가능해져요.
-          </p>
-        </div>
-      </div>
-    </div>
-    <a href="#functions" class="scroll-down">아래로 스크롤</a>
-  </section>
-
-  <!-- 섹션 5: 시선의 다양한 기능 -->
-  <section class="page" id="functions">
-    <div class="inner">
-      <h2>
-        <span style="color: #666; font-weight: 500">즐겁고 간편함은 더욱!</span><br />
-        <b style="color: #111">시선의 다양한 기능</b>
-      </h2>
-
-      <!-- 한 장짜리 카드 이미지 -->
-      <picture>
-        <img class="functions-img" src="img/functions_cards.png" alt="문화 생활, 모임, 소통, 기록, 정보, 공지 기능 소개" />
-      </picture>
-    </div>
-    <a href="#cta" class="scroll-down">아래로 스크롤</a>
-  </section>
-
-  <!-- 섹션 6: 지금 내 시선으로 문화 시작하기 -->
-  <section class="page" id="cta">
-    <div class="inner">
-      <h2 class="cta-title">지금 내 시선으로 문화 시작하기</h2>
-
-      <div class="cta-grid">
-        <!-- 카드 1: 회원가입 -->
-        <!-- 회원가입 생성 후 창 연결하기 -->
-        <a class="cta-card primary" href="/signup.html" aria-label="회원가입 바로가기">
-          <div class="cta-text">
-            <p class="eyebrow">이번에 처음 오셨나요?</p>
-            <h3 class="cta-headline">회원가입</h3>
-          </div>
-          <img class="cta-illust" src="img/cta_1.png" alt="" />
-          <span class="cta-go" aria-hidden="true">↗</span>
-        </a>
-
-        <!-- 카드 2: 로그인 -->
-        <!-- 로그인 생성 후 창 연결하기 -->
-        <a class="cta-card" href="/login.html" aria-label="로그인 바로가기">
-          <div class="cta-text">
-            <p class="eyebrow">전에 이용하셨나요?</p>
-            <h3 class="cta-headline">로그인하기</h3>
-          </div>
-          <img class="cta-illust" src="img/cta_2.png" alt="" />
-          <span class="cta-go" aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-    <a href="#hero" class="scroll-down">맨 위로 올리기</a>
-  </section>
-
-  <!-- 챗봇: 모든 화면에서 우측 상단 고정 -->
-  <div class="chatbot-fixed">
-    <img src="img/AI_chat.png" alt="AI 도우미" />
-  </div>
-  <script>
-    const chatbot = document.querySelector(".chatbot-fixed");
-    const hero = document.querySelector("#hero");
-
-    function toggleChatbot() {
-      const heroRect = hero.getBoundingClientRect();
-      // hero가 화면에 보일 때는 숨김
-      if (heroRect.bottom > 0) {
-        chatbot.style.display = "none";
-      } else {
-        chatbot.style.display = "block";
+      /* 우측 일러스트 */
+      .cta-illust {
+        width: 220px;
+        height: auto;
+        object-fit: contain;
+        pointer-events: none;
       }
-    }
 
-    window.addEventListener("scroll", toggleChatbot);
-    window.addEventListener("load", toggleChatbot);
-  </script>
-</body>
+      /* 우상단 화살표 */
+      .cta-go {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5a400;
+        color: #fff;
+        font-weight: 800;
+        border-radius: 999px;
+        box-shadow: 0 4px 10px rgba(245, 164, 0, 0.3);
+      }
 
+      /* 반응형 */
+      @media (max-width: 980px) {
+        .cta-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cta-illust {
+          width: 180px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .cta-card {
+          padding: 28px 22px;
+        }
+
+        .cta-illust {
+          width: 150px;
+        }
+
+        .cta-headline {
+          font-size: 24px;
+        }
+
+        .cta-title {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 섹션 1: 히어로 -->
+    <section class="page" id="hero">
+      <header class="location-top">
+        <nav class="wrap nav">
+          <a href="/home.html"
+            ><img
+              src="img/siseon_letter.png"
+              alt="시선 로고"
+              class="brand-logo"
+          /></a>
+
+          <ul class="menu">
+            <li><a href="/home.html" aria-current="page">홈</a></li>
+            <li><a href="/reco.html">추천</a></li>
+            <li><a href="/culture.html">문화생활</a></li>
+            <li><a href="/community.html">소통</a></li>
+            <li><a href="/notice.html">공지사항</a></li>
+            <li><a href="/mypage.html">내정보</a></li>
+          </ul>
+          <div class="auth">
+            <a class="btn" href="/login.html">로그인</a>
+            <a class="btn" href="/signup.html">회원가입</a>
+          </div>
+        </nav>
+      </header>
+
+      <div class="bg">
+        <img src="img/main_1.png" alt="배경" />
+      </div>
+
+      <div class="content">
+        <img
+          src="img/siseon_letter.png"
+          alt="시선 로고 중앙"
+          class="center-logo"
+        />
+        <h2>새로움과 연결 선이 필요 하신가요?</h2>
+        <p>새로운 시선으로 시니어와 세상을 연결 시키다</p>
+      </div>
+
+      <a href="#about" class="scroll-down">아래로 스크롤</a>
+    </section>
+
+    <!-- 섹션 2: 시선이란? -->
+    <section class="page" id="about">
+      <div class="inner">
+        <h2><b>시선</b>이란?</h2>
+
+        <div class="venn" aria-hidden="true">
+          <svg
+            viewBox="0 0 900 500"
+            width="70%"
+            height="auto"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              <radialGradient id="gfill" cx="50%" cy="30%" r="80%">
+                <stop offset="0%" stop-color="#FFD361" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="#FFD361" stop-opacity="0.25" />
+              </radialGradient>
+            </defs>
+
+            <!-- 좌/우 원 -->
+            <circle
+              cx="330"
+              cy="230"
+              r="140"
+              fill="url(#gfill)"
+              stroke="#FFC21E"
+              stroke-width="3"
+            />
+            <circle
+              cx="570"
+              cy="230"
+              r="140"
+              fill="url(#gfill)"
+              stroke="#FFC21E"
+              stroke-width="3"
+            />
+
+            <!-- 좌측 텍스트 -->
+            <text
+              x="330"
+              y="225"
+              text-anchor="middle"
+              font-family="Pretendard, Arial, sans-serif"
+              font-weight="800"
+              font-size="36"
+              fill="#F5A400"
+            >
+              시니어
+            </text>
+            <text
+              x="330"
+              y="255"
+              text-anchor="middle"
+              font-family="Pretendard, Arial, sans-serif"
+              font-size="18"
+              fill="#333"
+            >
+              60세 이상의 노인 세대
+            </text>
+
+            <!-- 우측 텍스트 -->
+            <text
+              x="570"
+              y="225"
+              text-anchor="middle"
+              font-family="Pretendard, Arial, sans-serif"
+              font-weight="800"
+              font-size="36"
+              fill="#F5A400"
+            >
+              선
+            </text>
+            <text
+              x="570"
+              y="255"
+              text-anchor="middle"
+              font-family="Pretendard, Arial, sans-serif"
+              font-size="18"
+              fill="#333"
+            >
+              연결 線
+            </text>
+
+            <!-- 중앙 점 + 화살표 -->
+            <line
+              x1="450"
+              y1="250"
+              x2="450"
+              y2="420"
+              stroke="#6B6B6B"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <circle cx="450" cy="250" r="5" fill="#6B6B6B" />
+            <path
+              d="M 440 410 L 450 430 L 460 410"
+              fill="none"
+              stroke="#6B6B6B"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <img src="img/siseon_logo.png" alt="시선 로고" class="center-logo" />
+        <p class="desc">
+          <b>시니어(Senior)</b>와 <b>선(연결)</b>을 더한 말로<br />
+          시니어들이 문화를 통해 서로 연결되는 플랫폼이다.
+        </p>
+      </div>
+
+      <a href="#features" class="scroll-down">아래로 스크롤</a>
+    </section>
+
+    <!-- 섹션 3: 누구나 쉽게! -->
+    <section class="page" id="features">
+      <div class="inner">
+        <h2>누구나 쉽게!</h2>
+        <div class="cards">
+          <div class="card">
+            <img src="img/feature_1.png" alt="문화행사 추천 이미지" />
+            <div class="title">문화행사 추천</div>
+          </div>
+          <div class="card">
+            <img src="img/feature_2.png" alt="모임 자동 매칭 이미지" />
+            <div class="title">모임 자동 매칭</div>
+          </div>
+          <div class="card">
+            <img src="img/feature_3.png" alt="후기 작성 이미지" />
+            <div class="title">후기 작성</div>
+          </div>
+        </div>
+      </div>
+      <a href="#value" class="scroll-down">아래로 스크롤</a>
+    </section>
+
+    <!-- 섹션 4: 가치 소개 -->
+    <section class="page" id="value">
+      <div class="inner">
+        <blockquote class="quote">
+          <span class="mark">❝</span>
+          언제나 당신을 이어줄 선과 함께<br />
+          새로운 시선으로 세상을 연결 시켜드리겠습니다
+          <span class="mark">❞</span>
+        </blockquote>
+
+        <!-- 비디오 위치. 생기면 넣을 것 -->
+        <div class="video-wrap">
+          <video controls poster="video_thumb.jpg">
+            <source src="intro_video.mp4" type="video/mp4" />
+            브라우저가 비디오를 지원하지 않습니다.
+          </video>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <img src="img/value_1.png" alt="연결 강화" />
+            <h3>사회적 연결 강화</h3>
+            <p>
+              혼자 있는 시간이 많은 시니어들이 공원 산책과 모임에 참여하고 또래
+              친구들과 소통할 수 있어요.
+            </p>
+          </div>
+          <div class="feature">
+            <img src="img/value_2.png" alt="문화 확산" />
+            <h3>문화생활 참여 확대</h3>
+            <p>
+              전시, 공연, 체험 등 다양한 문화활동을 쉽게 찾고 신청할 수 있어
+              삶의 활력을 느낄 수 있어요.
+            </p>
+          </div>
+          <div class="feature">
+            <img src="img/value_3.png" alt="디지털 역량" />
+            <h3>디지털 역량 향상</h3>
+            <p>
+              쉽고 재미있는 사용법으로 자연스럽게 디지털 기기 사용에 익숙해져
+              자신감이 생겨요.
+            </p>
+          </div>
+          <div class="feature">
+            <img src="img/value_4.png" alt="일정 관리" />
+            <h3>개인 일정 관리</h3>
+            <p>
+              참여할 행사, 모임, 후기 등을 스스로 관리할 수 있어 자기 주도적인
+              생활이 가능해져요.
+            </p>
+          </div>
+        </div>
+      </div>
+      <a href="#functions" class="scroll-down">아래로 스크롤</a>
+    </section>
+
+    <!-- 섹션 5: 시선의 다양한 기능 -->
+    <section class="page" id="functions">
+      <div class="inner">
+        <h2>
+          <span style="color: #666; font-weight: 500"
+            >즐겁고 간편함은 더욱!</span
+          ><br />
+          <b style="color: #111">시선의 다양한 기능</b>
+        </h2>
+
+        <!-- 한 장짜리 카드 이미지 -->
+        <picture>
+          <img
+            class="functions-img"
+            src="img/functions_cards.png"
+            alt="문화 생활, 모임, 소통, 기록, 정보, 공지 기능 소개"
+          />
+        </picture>
+      </div>
+      <a href="#cta" class="scroll-down">아래로 스크롤</a>
+    </section>
+
+    <!-- 섹션 6: 지금 내 시선으로 문화 시작하기 -->
+    <section class="page" id="cta">
+      <div class="inner">
+        <h2 class="cta-title">지금 내 시선으로 문화 시작하기</h2>
+
+        <div class="cta-grid">
+          <!-- 카드 1: 회원가입 -->
+          <!-- 회원가입 생성 후 창 연결하기 -->
+          <a
+            class="cta-card primary"
+            href="/signup.html"
+            aria-label="회원가입 바로가기"
+          >
+            <div class="cta-text">
+              <p class="eyebrow">이번에 처음 오셨나요?</p>
+              <h3 class="cta-headline">회원가입</h3>
+            </div>
+            <img class="cta-illust" src="img/cta_1.png" alt="" />
+            <span class="cta-go" aria-hidden="true">↗</span>
+          </a>
+
+          <!-- 카드 2: 로그인 -->
+          <!-- 로그인 생성 후 창 연결하기 -->
+          <a class="cta-card" href="/login.html" aria-label="로그인 바로가기">
+            <div class="cta-text">
+              <p class="eyebrow">전에 이용하셨나요?</p>
+              <h3 class="cta-headline">로그인하기</h3>
+            </div>
+            <img class="cta-illust" src="img/cta_2.png" alt="" />
+            <span class="cta-go" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+      <a href="#hero" class="scroll-down">맨 위로 올리기</a>
+    </section>
+
+    <!-- 챗봇: 모든 화면에서 우측 상단 고정 -->
+    <div class="chatbot-fixed">
+      <img src="img/AI_chat.png" alt="AI 도우미" />
+    </div>
+    <script>
+      const chatbot = document.querySelector(".chatbot-fixed");
+      const hero = document.querySelector("#hero");
+
+      function toggleChatbot() {
+        const heroRect = hero.getBoundingClientRect();
+        // hero가 화면에 보일 때는 숨김
+        if (heroRect.bottom > 0) {
+          chatbot.style.display = "none";
+        } else {
+          chatbot.style.display = "block";
+        }
+      }
+
+      window.addEventListener("scroll", toggleChatbot);
+      window.addEventListener("load", toggleChatbot);
+    </script>
+  </body>
 </html>
