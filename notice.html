@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="CSS/notice.css" />
   </head>
 
-  <body>
-    <!-- 헤더 -->
-    <header>
-      <nav class="nav">
-        <a href="/home.html">시선_</a>
+  <body id="setting">
+    <!-- 상단 네비(얇은 라인 + sticky) -->
+    <header class="location-top">
+      <nav class="wrap nav">
+        <a href="/home.html"
+          ><img src="img/siseon_letter.png" alt="시선 로고" class="brand-logo"
+        /></a>
+
         <ul class="menu">
           <li><a href="/home.html">홈</a></li>
           <li><a href="/reco.html">추천</a></li>
@@ -21,6 +24,7 @@
           <li><a href="/notice.html" aria-current="page">공지사항</a></li>
           <li><a href="/mypage.html">내정보</a></li>
         </ul>
+        <!-- 로그인/회원가입 버튼 -->
         <div class="auth">
           <a class="btn" href="/login.html">로그인</a>
           <a class="btn" href="/signup.html">회원가입</a>
