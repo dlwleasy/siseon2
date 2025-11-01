@@ -8,40 +8,39 @@
     <link rel="stylesheet" href="CSS/community.css" />
   </head>
 
-  <body>
-    <!-- 헤더 -->
-    <header>
-      <nav class="nav">
-        <a href="/home.html">시선_</a>
+  <body id="setting">
+    <!-- 상단 네비(얇은 라인 + sticky) -->
+    <header class="location-top">
+      <nav class="wrap nav">
+        <a href="/home.html"
+          ><img src="img/siseon_letter.png" alt="시선 로고" class="brand-logo"
+        /></a>
+
         <ul class="menu">
           <li><a href="/home.html">홈</a></li>
           <li><a href="/reco.html">추천</a></li>
           <li><a href="/culture.html">문화생활</a></li>
-          <li><a href="/community.html">소통</a></li>
+          <li><a href="/community.html" aria-current="page">소통</a></li>
           <li><a href="/notice.html">공지사항</a></li>
           <li><a href="/mypage.html">내정보</a></li>
         </ul>
+        <!-- 로그인/회원가입 버튼 -->
         <div class="auth">
           <a class="btn" href="/login.html">로그인</a>
           <a class="btn" href="/signup.html">회원가입</a>
         </div>
       </nav>
     </header>
-
     <!-- 메인 컨텐츠 -->
     <div class="container">
       <!-- 히어로 섹션 -->
       <div class="hero">
-        <img
-          src="https://via.placeholder.com/180"
-          alt="캐릭터"
-          class="hero-img"
-        />
+        <img src="img/community-daily.png" alt="캐릭터" class="hero-img" />
         <div class="hero-text">
-          <h1 id="heroTitle">시선으로 이야기는</h1>
-          <p>
+          <h1 id="heroTitle">시선으로 이어지는</h1>
+          <h1>
             <strong id="heroSubtitle">우리의 일상 이야기</strong>를 함께 나눠요
-          </p>
+          </h1>
         </div>
       </div>
 
@@ -60,14 +59,14 @@
               <input
                 type="text"
                 id="dailyTitle"
-                placeholder="제목: 같이의! 한 줄로 스토리로 담은 일상을 적어보세요!"
+                placeholder="한 줄로 소통하고 싶은 말을 적어보세요!"
                 required
               />
             </div>
             <div class="form-group">
               <textarea
                 id="dailyContent"
-                placeholder="스토리를 자유롭게 적어보세요!"
+                placeholder="소통 글을 자유롭게 적어보세요!"
                 required
               ></textarea>
             </div>
@@ -103,7 +102,7 @@
               <input
                 type="text"
                 id="reviewTitle"
-                placeholder="같이의!, 함께 즐거웠던 시선의 모든 추억을 적어보세요!"
+                placeholder="함께 문화생활을 체험한 모임 후기를!"
                 required
               />
             </div>

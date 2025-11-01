@@ -1,11 +1,13 @@
+// community.js - 좋아요 기능 추가 버전
+
 // 데이터 저장소
 let dailyPosts = [
   {
     id: 1,
     author: "사용자1",
-    title: "어느 저녁 종료하고, 동네 창문 산책중에요~",
+    title: "오늘 강아지랑 동네 공원 산책중에요~",
     content:
-      "우리집 근처 카페에서 아메리카노 한잔하는 걸 목표로 했었는데, 오늘 했습니다!",
+      "우리집 근처 카페에서 아메리카노 한 잔하는 걸 목표로 했었는데, 오늘 했습니다!",
     likes: 12,
     commentCount: 6,
     comments: [
@@ -16,9 +18,9 @@ let dailyPosts = [
   {
     id: 2,
     author: "사용자2",
-    title: "오늘 치킨 무야기 먹었다!",
+    title: "오늘 치킨 먹었다!",
     content:
-      "너무 맛있 지차 사람들이랑 같이 먹은 건 오프라인 매장이었어요 (기분최고!)",
+      "너무 맛있는 동네 깐부치킨!! 다음에 같이갈 사람 구합니다~!! (기분최고!)",
     likes: 25,
     commentCount: 8,
     comments: [],
@@ -30,12 +32,9 @@ let reviewPosts = [
     id: 1,
     author: "행복한우리집",
     title:
-      "망 좋은 보면! 가을 장기 보고 올랐어요~!! 실제로 올라갈수있다면 너무 좋아 거예요~!",
+      "오늘 케이블카 타고 가족들이랑 앞산에 갔어요~!! 실제로 올라 갈 수 있다면 너무 좋을 것 같아요~!",
     rating: 5,
-    images: [
-      "https://via.placeholder.com/300x300/ff6b6b/fff",
-      "https://via.placeholder.com/300x300/4ecdc4/fff",
-    ],
+    images: [],
     likes: 12,
     commentCount: 0,
     comments: [],
@@ -53,6 +52,7 @@ const dailyContent = document.getElementById("daily-content");
 const reviewContent = document.getElementById("review-content");
 const heroTitle = document.getElementById("heroTitle");
 const heroSubtitle = document.getElementById("heroSubtitle");
+const heroImage = document.querySelector(".hero-img");
 
 tabs.forEach((tab) => {
   tab.addEventListener("click", () => {
@@ -61,15 +61,17 @@ tabs.forEach((tab) => {
 
     currentTab = tab.dataset.tab;
     if (currentTab === "daily") {
+      heroImage.src = "img/community-daily.png"; // 일상 이미지로 교체
       dailyContent.classList.remove("hidden");
       reviewContent.classList.add("hidden");
       heroTitle.textContent = "시선으로 이야기는";
       heroSubtitle.textContent = "우리의 일상 이야기";
     } else {
+      heroImage.src = "img/community-review.png";
       dailyContent.classList.add("hidden");
       reviewContent.classList.remove("hidden");
       heroTitle.textContent = "당신의 한 줄 후기";
-      heroSubtitle.textContent = "누군가에게 새로운 시선이 됩니다";
+      heroSubtitle.innerHTML = "누군가에게<br>새로운 시선이 됩니다";
     }
   });
 });
@@ -195,7 +197,9 @@ function renderDailyPosts() {
             <div class="post-title">${post.title}</div>
             <div class="post-content">${post.content}</div>
             <div class="post-meta">
-              <span>👍 ${post.likes}개</span>
+              <span class="like-btn" onclick="event.stopPropagation(); toggleLike(${post.id}, 'daily')">
+                👍 <span id="daily-likes-${post.id}">${post.likes}</span>개
+              </span>
               <span>💬 ${post.commentCount}개</span>
             </div>
           </div>
@@ -240,13 +244,44 @@ function renderReviewPosts() {
                 : ""
             }
             <div class="post-meta">
-              <span>👍 ${post.likes}개</span>
+              <span class="like-btn" onclick="event.stopPropagation(); toggleLike(${
+                post.id
+              }, 'review')">
+                👍 <span id="review-likes-${post.id}">${post.likes}</span>개
+              </span>
               <span>💬 ${post.commentCount}개</span>
             </div>
           </div>
         `
     )
     .join("");
+}
+
+// 좋아요 토글 함수 (새로 추가)
+function toggleLike(postId, type) {
+  const post =
+    type === "daily"
+      ? dailyPosts.find((p) => p.id === postId)
+      : reviewPosts.find((p) => p.id === postId);
+
+  if (!post) return;
+
+  // 좋아요 증가
+  post.likes += 1;
+
+  // UI 업데이트
+  const likesElement = document.getElementById(`${type}-likes-${postId}`);
+  if (likesElement) {
+    likesElement.textContent = post.likes;
+  }
+
+  // 모달이 열려있다면 모달도 업데이트
+  if (currentPostId === postId) {
+    const modalLikes = document.getElementById("modalLikes");
+    if (modalLikes) {
+      modalLikes.textContent = post.likes;
+    }
+  }
 }
 
 // 게시글 삭제
@@ -305,7 +340,14 @@ function openCommentModal(postId, type) {
   // 내용 표시
   const contentContainer = document.getElementById("modalPostContent");
   if (post.content) {
-    contentContainer.innerHTML = `<div style="margin: 15px 0; line-height: 1.6; color: #666;">${post.content}</div>`;
+    contentContainer.innerHTML = `
+      <div style="margin: 15px 0; line-height: 1.6; color: #666;">${post.content}</div>
+      <div style="margin: 20px 0; padding-top: 15px; border-top: 1px solid #e5e5e5;">
+        <span class="like-btn" onclick="toggleLike(${postId}, '${type}')" style="cursor: pointer; font-size: 14px; color: #999;">
+          👍 <span id="modalLikes">${post.likes}</span>개
+        </span>
+      </div>
+    `;
   } else {
     contentContainer.innerHTML = "";
   }
