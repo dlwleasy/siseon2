@@ -608,3 +608,205 @@ html, body {
   background: #FFE38F !important;
   border-color: #FFC300 !important;
 }
+
+/* 하단 페이저: 도트는 중앙, 버튼은 오른쪽 */
+.mmodal__pager{
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;   /* 도트를 중앙 기준으로 */
+  gap: 10px !important;
+  margin-top: 24px !important;
+  padding: 0 20px 14px !important;
+}
+
+/* 도트(가시성 보장) */
+.mmodal__pager .dot{
+  display: inline-block !important;
+  width: 9px !important;
+  height: 9px !important;
+  border-radius: 999px !important;
+  background: #e7e7e7 !important;
+}
+.mmodal__pager .dot.dot--on{ background: #ffd35a !important; }
+
+/* '다음' 버튼: 오른쪽 고정(절대위치), '모든 날짜'와 동일 비주얼 */
+.mmodal__next{
+  position: absolute !important;
+  right: 20px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+
+  min-width: 118px !important;
+  padding: 12px 22px !important;
+  border-radius: 999px !important;
+
+  background: #FFEDB0 !important;      /* qbtn--active 톤 */
+  border: 1.5px solid #FFC300 !important;
+  color: #111 !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  box-shadow: none !important;
+}
+.mmodal__next:hover{
+  background: #FFE38F !important;
+  border-color: #FFC300 !important;
+}
+
+/* === 2단계: 시간 선택 화면 === */
+.time-select {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 60px 20px;
+  flex-wrap: wrap;
+}
+
+.time-card {
+  position: relative;
+  width: 160px;
+  height: 200px;
+  background: #fff;
+  border: 2px solid #E8E8E8;
+  border-radius: 20px;
+  padding: 24px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.time-card:hover {
+  border-color: #FFC300;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(255, 195, 0, 0.15);
+}
+
+.time-card--active {
+  background: #FFFAEC;
+  border: 3px solid #FFC300;
+  box-shadow: 0 8px 20px rgba(255, 195, 0, 0.25);
+}
+
+.time-label {
+  font-size: 15px;
+  color: #666;
+  font-weight: 600;
+}
+
+.time-range {
+  font-size: 26px;
+  font-weight: 800;
+  color: #111;
+  margin: 4px 0;
+}
+
+.time-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  background: #F5F5F5;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #666;
+  font-weight: 600;
+}
+
+.time-card--active .time-count {
+  background: #FFE8A3;
+  color: #111;
+}
+
+.time-check {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: #FFC300;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #000;
+  font-weight: 900;
+}
+
+/* === 3단계: 매칭 진행 중 화면 === */
+.matching-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.robot-icon {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 32px;
+}
+
+.spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 4px solid transparent;
+  border-top-color: #FFC300;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.matching-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 12px;
+}
+
+.matching-subtext {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 스텝 전환 */
+.mmodal__step {
+  display: none;
+}
+
+.mmodal__step[data-step].active {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .time-select {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  .time-card {
+    width: 100%;
+    max-width: 280px;
+  }
+} 
