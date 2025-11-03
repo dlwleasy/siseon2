@@ -45,7 +45,7 @@
         addMsg({text, who:'self'});
         input.value = '';
         setTimeout(()=> {
-          let reply = "좋아요. 그럼 그 날에 뵙겠습니다.";
+          let reply = "확인하였습니다.";
           if (text.includes('어디')|| text.includes('장소')) reply = "미술관 정문 앞에서 만나면 어떨까요? 오전 11시 15분에 출발하겠습니다.";
           addMsg({text:reply, who:'other'});
         }, 900 + Math.random()*500);
