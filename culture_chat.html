@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>모임 매칭 채팅</title>
+
+  <!-- 기존 전역/네비 스타일 유지 -->
+  <link rel="stylesheet" href="CSS/global.css" />
+  <link rel="stylesheet" href="CSS/nav.css" />
+
+  <!-- 페이지 전용 스타일 -->
+  <link rel="stylesheet" href="CSS/culture_chat.css" />
+</head>
+
+<body id="setting">
+  <!-- 상단 네비 (기존 그대로) -->
+  <header class="location-top">
+    <nav class="wrap nav">
+      <a class="logo" href="/home.html">로고</a>
+
+      <ul class="menu">
+        <li><a href="/home.html">홈</a></li>
+        <li><a href="/reco.html">추천</a></li>
+        <li><a href="/culture.html" aria-current="page">문화생활</a></li>
+        <li><a href="/community.html">소통</a></li>
+        <li><a href="/notice.html">공지사항</a></li>
+        <li><a href="/mypage.html">내정보</a></li>
+      </ul>
+
+      <div class="auth">
+        <a class="btn" href="/login.html">로그인</a>
+        <a class="btn" href="/signup.html">회원가입</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="cc-page">
+    <div class="cc-container">
+      <!-- 왼쪽: 미술관 소개 -->
+      <section class="cc-left">
+        <div class="cc-card cc-hero">
+          <div class="cc-hero-left">
+            <img src="img/culture_chat_1.png" alt="모임 아이콘" class="cc-hero-icon" />
+          </div>
+          <div class="cc-hero-body">
+            <h1 class="cc-hero-title">미술관 함께가기<br><strong>모임 매칭 완료!</strong></h1>
+            <p class="cc-hero-sub muted">간송 미술 전시회 · 가이드 포함 · 초급 환영</p>
+            <div class="cc-meta">
+              <div class="cc-meta-item">
+                <div class="cc-label">인원</div>
+                <div class="cc-value">14명</div>
+              </div>
+              <div class="cc-meta-item">
+                <div class="cc-label">날짜</div>
+                <div class="cc-value">2025/09/02</div>
+              </div>
+              <div class="cc-meta-item">
+                <div class="cc-label">시간</div>
+                <div class="cc-value">오전 11:30</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 가운데: 채팅 -->
+      <section class="cc-center">
+        <div class="cc-card cc-chat-card">
+          <div class="cc-chat-header">오늘</div>
+          <div class="cc-msgwrap" id="ccMsgList" role="log" aria-live="polite">
+            <!-- Messages Here -->
+          </div>
+          <div class="cc-quick">
+            <button class="cc-quick-btn">안녕하세요.</button>
+            <button class="cc-quick-btn">반갑습니다.</button>
+            <button class="cc-quick-btn">어디서 볼까요</button>
+            <button class="cc-quick-btn">좋아요.</button>
+          </div>
+          <div class="cc-inputbar">
+            <textarea id="ccInput" class="cc-textarea" placeholder="문의하실 내용을 입력하거나, 위의 버튼을 선택해 주세요."></textarea>
+            <div class="cc-input-actions">
+              <button id="ccMic" class="cc-icon-btn" title="음성 입력">🎤</button>
+              <button id="ccSend" class="cc-send-btn" title="전송">전송</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 오른쪽: 이벤트 정보 -->
+      <aside class="cc-right">
+        <div class="cc-sidecard">
+          <img class="cc-thumb" src="img/culture_chat_2.png" alt="전시 이미지">
+          <div class="cc-sidebody">
+            <h3 class="cc-side-title">간송 미술관 가이드 프로그램</h3>
+            <p class="muted cc-side-sub">간송 미술관 가이드 프로그램 · 약 90분 · 소규모 진행</p>
+            <div class="cc-tags">
+              <span class="cc-tag">미술관</span>
+              <span class="cc-tag">오래하는</span>
+              <span class="cc-tag">오늘하는</span>
+              <span class="cc-tag">기타</span>
+            </div>
+            <button class="cc-ghost" id="ccObserve" onclick="window.location.href='culture_description.html';">구경하기</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="/js/culture_chat.js"></script>
+</body>
+
+</html>
