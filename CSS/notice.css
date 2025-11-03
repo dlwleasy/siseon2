@@ -1,0 +1,293 @@
+/* 공지사항 페이지 전용 스타일 */
+
+.notice-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+/* 배너 영역 */
+.banner {
+  display: none; /* 기본적으로 숨김 */
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 60px;
+  padding: 40px 0;
+  animation: fadeIn 0.3s;
+}
+
+.banner.active {
+  display: flex; /* active 클래스가 있을 때만 보임 */
+}
+
+.banner-icon img {
+  width: 150px;
+  height: auto;
+}
+
+.banner-text h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 탭 메뉴 */
+.tab-menu {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 40px;
+}
+
+.tab-btn {
+  padding: 15px 60px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.tab-btn:hover {
+  color: #333;
+}
+
+.tab-btn.active {
+  color: #ffc107;
+  font-weight: 700;
+}
+
+.tab-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #ffc107;
+}
+
+/* 검색 영역 */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  gap: 10px;
+}
+
+.search-input {
+  width: 500px;
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #ffc107;
+}
+
+.search-btn {
+  width: 45px;
+  height: 45px;
+  background-color: #ffc107;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #ffb300;
+}
+
+/* 탭 컨텐츠 */
+.notice-content {
+  min-height: 500px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 공지사항 테이블 */
+.notice-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.notice-table thead {
+  background-color: #f8f9fa;
+  border-top: 2px solid #333;
+  border-bottom: 1px solid #ddd;
+}
+
+.notice-table th {
+  padding: 15px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.col-badge {
+  width: 100px;
+}
+
+.col-title {
+  width: auto;
+  text-align: left !important;
+}
+
+.col-date {
+  width: 150px;
+}
+
+.notice-table tbody tr {
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.notice-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.notice-table td {
+  padding: 18px 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.notice-table td.title {
+  text-align: left;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 배지 스타일 */
+.badge {
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.badge.special {
+  background-color: #ff5722;
+}
+
+.badge.education {
+  background-color: #4caf50;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 40px;
+  padding-bottom: 60px;
+}
+
+.page-btn {
+  min-width: 35px;
+  height: 35px;
+  padding: 0 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.page-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #ffc107;
+}
+
+.page-btn.active {
+  background-color: #ffc107;
+  color: #fff;
+  border-color: #ffc107;
+  font-weight: 600;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .banner {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .banner-icon img {
+    width: 100px;
+  }
+
+  .banner-text h1 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .tab-btn {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .notice-table {
+    font-size: 12px;
+  }
+
+  .notice-table th,
+  .notice-table td {
+    padding: 12px 8px;
+  }
+
+  .col-badge {
+    width: 80px;
+  }
+
+  .col-date {
+    width: 100px;
+  }
+}
