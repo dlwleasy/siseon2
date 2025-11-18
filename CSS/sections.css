@@ -73,22 +73,6 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
-/* 인기 모임 (2 x 2) */
-.popular {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
-}
-.pop-card {
-  background: #f3f4f6;
-  border-radius: 14px;
-  padding: 18px 20px;
-}
-.pop-title {
-  font-weight: 800;
-  margin-bottom: 8px;
-}
-
 /* CTA */
 .cta {
   text-align: center;
@@ -103,4 +87,69 @@
   color: #111;
   font-weight: 800;
   border: 1px solid #fde68a;
+}
+/* 2 x 2 그리드 레이아웃 */
+.popular {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* 카드 공통 스타일 */
+.pop-card {
+  position: relative;
+  height: 200px; /* 필요하면 220~260px로 키워도 됨 */
+  border-radius: 16px;
+  overflow: hidden;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 어두운 그라데이션 오버레이 (텍스트 잘 보이게) */
+.pop-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+  z-index: 0;
+}
+
+/* 텍스트 레이아웃 + 오버레이 위로 올리기 */
+.pop-text {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* 아래쪽에 붙도록 */
+}
+
+.pop-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.pop-card .muted {
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+.pop1 {
+  background-image: url("../img/pop1.png");
+}
+
+.pop2 {
+  background-image: url("../img/pop2.png");
+}
+
+.pop3 {
+  background-image: url("../img/pop3.png");
+}
+
+.pop4 {
+  background-image: url("../img/pop4.png");
 }

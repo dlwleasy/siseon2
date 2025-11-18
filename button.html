@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>텍스트 돋보기 (버튼으로 켜기/끄기)</title>
+    <style>
+      :root {
+        --lens: 240px; /* 렌즈 크기 */
+        --zoom: 2.4; /* 확대 비율 */
+      }
+
+      body {
+        font-family: system-ui, Arial, sans-serif;
+        line-height: 1.7;
+        padding: 40px;
+        background: #fafafa;
+      }
+
+      h2 {
+        margin-bottom: 16px;
+      }
+
+      /* 버튼 */
+      .toggle-btn {
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .toggle-btn:hover {
+        background: #1d4ed8;
+      }
+      .toggle-btn.active {
+        background: #dc2626; /* 비활성화 시 빨강 */
+      }
+
+      /* 텍스트 박스 */
+      .mag-area {
+        position: relative;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 28px;
+        max-width: 760px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        user-select: text;
+        margin-top: 20px;
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* 렌즈 */
+      .lens {
+        position: absolute;
+        width: var(--lens);
+        height: var(--lens);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid rgba(0, 0, 0, 0.25);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+        pointer-events: none;
+        display: none;
+        z-index: 2;
+        background: #fff; /* 원본 가리기 */
+      }
+
+      .lens > .zoomed {
+        position: absolute;
+        transform-origin: 0 0;
+        will-change: transform, left, top;
+        padding: 28px;
+        width: calc(100% - 56px);
+      }
+
+      .hint {
+        color: #667085;
+        margin-top: 12px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>버튼으로 돋보기 켜기 / 끄기</h2>
+
+    <button id="toggleBtn" class="toggle-btn">🔍 돋보기 켜기</button>
+
+    <div class="mag-area" id="magArea" tabindex="0">
+      <div class="content" id="content">
+        <h3>샘플 텍스트</h3>
+        <p>
+          아래 버튼을 눌러 돋보기를 켜세요. 켜진 동안은 마우스를 움직이면 렌즈가
+          따라다니며 확대된 글자만 보입니다.
+        </p>
+        <p>
+          다시 버튼을 누르면 돋보기가 꺼집니다. 렌즈 크기와 배율은 코드 상단의
+          <code>:root</code>에서 조정할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="lens" id="lens">
+        <div class="zoomed" id="zoomed"></div>
+      </div>
+    </div>
+
+    <p class="hint">버튼 클릭으로 돋보기 On/Off 제어 · 휠로 확대/축소 가능</p>
+
+    <script>
+      const area = document.getElementById("magArea");
+      const content = document.getElementById("content");
+      const lens = document.getElementById("lens");
+      const zoomed = document.getElementById("zoomed");
+      const toggleBtn = document.getElementById("toggleBtn");
+
+      let zoom =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue("--zoom")
+        ) || 2.4;
+      let lensSize =
+        parseInt(
+          getComputedStyle(document.documentElement).getPropertyValue("--lens")
+        ) || 240;
+      const r = lensSize / 2;
+
+      // 초기 상태
+      let magnifierOn = false;
+
+      // 복제본 생성
+      zoomed.innerHTML = content.innerHTML;
+
+      // 좌표 계산
+      function getLocalXY(evt) {
+        const rect = area.getBoundingClientRect();
+        const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+        const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+        const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+        const y = Math.max(0, Math.min(clientY - rect.top, rect.height));
+        return { x, y };
+      }
+
+      function showLens() {
+        if (!magnifierOn) return;
+        lens.style.display = "block";
+      }
+      function hideLens() {
+        lens.style.display = "none";
+      }
+
+      function move(evt) {
+        if (!magnifierOn) return;
+        const { x, y } = getLocalXY(evt);
+        lens.style.left = x - r + "px";
+        lens.style.top = y - r + "px";
+
+        zoomed.style.transform = `scale(${zoom})`;
+        zoomed.style.left = -(x * zoom - r) + "px";
+        zoomed.style.top = -(y * zoom - r) + "px";
+      }
+
+      function onWheel(e) {
+        if (!magnifierOn || lens.style.display === "none") return;
+        e.preventDefault();
+        const dir = Math.sign(e.deltaY);
+        zoom = Math.min(4.0, Math.max(1.2, +(zoom - dir * 0.2).toFixed(2)));
+        move(e);
+      }
+
+      // 버튼 토글
+      toggleBtn.addEventListener("click", () => {
+        magnifierOn = !magnifierOn;
+        if (magnifierOn) {
+          toggleBtn.textContent = "❌ 돋보기 끄기";
+          toggleBtn.classList.add("active");
+        } else {
+          toggleBtn.textContent = "🔍 돋보기 켜기";
+          toggleBtn.classList.remove("active");
+          hideLens();
+        }
+      });
+
+      // 이벤트
+      area.addEventListener("mouseenter", showLens);
+      area.addEventListener("mouseleave", hideLens);
+      area.addEventListener("mousemove", move);
+      area.addEventListener("wheel", onWheel, { passive: false });
+
+      // 터치 지원
+      area.addEventListener("touchstart", (e) => {
+        if (!magnifierOn) return;
+        showLens();
+        move(e);
+      });
+      area.addEventListener("touchmove", (e) => {
+        if (magnifierOn) move(e);
+      });
+      area.addEventListener("touchend", hideLens);
+    </script>
+  </body>
+</html>

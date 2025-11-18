@@ -6,18 +6,19 @@ body {
   margin-left: 285px;
   margin-right: 285px;
 }
+.recent_info img {
+  width: 148px;
+  height: 38px;
+  margin-bottom: 10px;
+}
 
 .recent_info {
-  img {
-    width: 148px;
-    height: 38px;
-    margin-bottom: 10px;
-  }
   display: grid; /* Grid 레이아웃 사용 */
   grid-template-columns: repeat(4, 1fr);
   gap: 33px;
   align-items: start; /* 세로 정렬 */
 }
+
 .card {
   position: relative;
   width: 260px;
@@ -99,4 +100,19 @@ body {
   height: 144px;
 
   margin-left: 15px;
+}
+
+.footer-img {
+  width: 850px; /* 원하시는 만큼 조절 가능 */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.site-footer {
+  width: 100%;
+  background: none; /* 배경 제거 */
+  padding: 0; /* 여백 제거 */
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
